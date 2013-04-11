@@ -45,8 +45,8 @@ documentation=$(which doxygen)
 #
 
 #libxml2_version=2.7.8
-#portaudio_version="v19_20110326"
-#axis2c_version=1.6.0
+portaudio_version="v19_20110326"
+axis2c_version=1.6.0
 
 #
 # SET DEPENDENCY VARIABLES
