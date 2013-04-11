@@ -1,0 +1,21 @@
+[submodule "libkolibre/narrator"]
+	path = libkolibre/narrator
+	url = git@github.com:kolibre/libkolibre-narrator.git
+[submodule "libkolibre/player"]
+	path = libkolibre/player
+	url = git@github.com:kolibre/libkolibre-player.git
+[submodule "libkolibre/xmlreader"]
+	path = libkolibre/xmlreader
+	url = git@github.com:kolibre/libkolibre-xmlreader.git
+[submodule "libkolibre/amis"]
+	path = libkolibre/amis
+	url = git@github.com:kolibre/libkolibre-amis.git
+[submodule "libkolibre/daisyonline"]
+	path = libkolibre/daisyonline
+	url = git@github.com:kolibre/libkolibre-daisyonline.git
+[submodule "libkolibre/naviengine"]
+	path = libkolibre/naviengine
+	url = git@github.com:kolibre/libkolibre-naviengine.git
+[submodule "libkolibre/clientcore"]
+	path = libkolibre/clientcore
+	url = git@github.com:kolibre/libkolibre-clientcore.git
