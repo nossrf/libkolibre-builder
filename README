@@ -39,10 +39,14 @@ sox vorbis-tools libsqlite3-dev libboost-signals-dev libboost-regex-dev
 libgstreamer-plugins-base0.10-dev libcurl4-openssl-dev libtidy-dev libxml2-dev
 socat libasound2-dev
 
-3. Checkout the submodules
+3. Install gstreamer runtime dependencies
+
+$ sudo apt-get install gstreamer0.10-plugins-good gstreamer0.10-plugins-bad gstreamer0.10-fluendo-mp3 gstreamer0.10-alsa
+
+4. Checkout the submodules
 
 $ git submodule init && git submodule update
 
-4. Run the build script
+5. Run the build script
 
 $ ./build_linux_sdk.sh
