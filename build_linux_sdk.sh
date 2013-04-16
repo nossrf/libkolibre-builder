@@ -38,7 +38,9 @@ buildStamps=${buildDir}/build.stamps
 downloadDir=${PWD}/downloads
 patchDir=${PWD}/patches
 prefix=${PWD}/kolibre-devel
+set +e
 documentation=$(which doxygen)
+set -e
 
 #
 # SET DEPENDENCY VERSIONS
@@ -156,7 +158,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix}
 make ${make_j} install
-test -n ${documentation} && make doxygen-doc
+test -n "${documentation}" && make doxygen-doc
 cd $CWD
 
 # player
@@ -166,7 +168,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix}
 make ${make_j} install
-test -n ${documentation} && make doxygen-doc
+test -n "${documentation}" && make doxygen-doc
 cd $CWD
 
 # xmlreader
@@ -176,7 +178,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix}
 make ${make_j} install
-test -n ${documentation} && make doxygen-doc
+test -n "${documentation}" && make doxygen-doc
 cd $CWD
 
 # amis
@@ -186,7 +188,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix}
 make ${make_j} install
-test -n ${documentation} && make doxygen-doc
+test -n "${documentation}" && make doxygen-doc
 cd $CWD
 
 # daisyonline
@@ -196,7 +198,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix}
 make ${make_j} install
-test -n ${documentation} && make doxygen-doc
+test -n "${documentation}" && make doxygen-doc
 cd $CWD
 
 # naviengine
@@ -206,7 +208,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix}
 make ${make_j} install
-test -n ${documentation} && make doxygen-doc
+test -n "${documentation}" && make doxygen-doc
 cd $CWD
 
 # clientcode
@@ -216,7 +218,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix} --with-samples
 make ${make_j} install
-test -n ${documentation} && make doxygen-doc
+test -n "${documentation}" && make doxygen-doc
 cd $CWD
 
 # build messages.db using narrator utils
