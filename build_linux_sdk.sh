@@ -1,23 +1,5 @@
 #!/bin/sh
 
-## Copyright (C) 2012 Kolibre
-#
-# This file is part of kolibre-builder.
-#
-# Kolibre-builder is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, either version 2.1 of the License, or
-# (at your option) any later version.
-#
-# Kolibre-builder is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Lesser General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public License
-# along with kolibre-builder. If not, see <http://www.gnu.org/licenses/>.
-#
-
 set -e
 set -x
 
@@ -38,15 +20,13 @@ buildStamps=${buildDir}/build.stamps
 downloadDir=${PWD}/downloads
 patchDir=${PWD}/patches
 prefix=${PWD}/kolibre-devel
-set +e
 documentation=$(which doxygen)
-set -e
 
 #
 # SET DEPENDENCY VERSIONS
 #
 
-#libxml2_version=2.7.8
+libxml2_version=2.7.8
 portaudio_version="v19_20110326"
 axis2c_version=1.6.0
 
@@ -75,10 +55,8 @@ download()
 #
 
 export PKG_CONFIG_PATH=${prefix}/lib/pkgconfig/
-export CFLAGS="-g -O2 -I${prefix}/include -pthread"
-#Extra flags used on newer machines -Wno-error=unused-but-set-variable -Wno-error=uninitialized -Wno-error=maybe-uninitialized
-export CXXFLAGS="-g -O2 -I${prefix}/include -pthread"
-#Extra flags used on newer machines -Wno-error=unused-but-set-variable -Wno-error=uninitialized
+export CFLAGS="-g -O2 -I${prefix}/include -pthread -Wno-error=unused-but-set-variable -Wno-error=uninitialized -Wno-error=maybe-uninitialized"
+export CXXFLAGS="-g -O2 -I${prefix}/include -pthread -Wno-error=unused-but-set-variable -Wno-error=uninitialized"
 export LDFLAGS="-L${prefix}/lib"
 
 test -d ${buildDir} || mkdir -p ${buildDir}
@@ -105,7 +83,6 @@ fi
 # build portaudio
 if [ -n "${portaudio_version}" ] && ! grep ${portaudiosrc} ${buildStamps}
 then
-    dpkg -s libasound2-dev > /dev/null || ( echo "Please install package libasound2-dev" && exit 1 )
     test -f ${downloadDir}/${portaudiosrc} || download http://www.portaudio.com/archives/${portaudiosrc}
     rm -rf ${portaudio}
     tar zxvf ${downloadDir}/${portaudiosrc}
@@ -130,7 +107,9 @@ then
     patch -p0 < ${patchDir}/axis2c-1.6.0_curl_ssl.patch
     patch -p0 < ${patchDir}/axis2c-1.6.0_curl_useragent.patch
     patch -p0 < ${patchDir}/axis2c-1.6.0_xml_https.patch
-    #patch -p0 < ${patchDir}/axis2c-1.6.0_ssl_utils.patch # does not work on debian squeeze
+    patch -p3 < ${patchDir}/axis2c-1.6.0_ac_headers.patch
+    patch -p3 < ${patchDir}/axis2c-1.6.0_timeout_and_low_speed_limit.patch
+    patch -p0 < ${patchDir}/axis2c-1.6.0_ssl_utils.patch # does not work on debian squeeze
 
     autoreconf -f -i
     ./configure \
@@ -158,7 +137,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix}
 make ${make_j} install
-test -n "${documentation}" && make doxygen-doc
+test -n ${documentation} && make doxygen-doc
 cd $CWD
 
 # player
@@ -168,7 +147,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix}
 make ${make_j} install
-test -n "${documentation}" && make doxygen-doc
+test -n ${documentation} && make doxygen-doc
 cd $CWD
 
 # xmlreader
@@ -176,9 +155,9 @@ cd libkolibre/xmlreader
 test -f configure || autoreconf -f -i
 test -d build || mkdir build
 cd build
-test -f Makefile || ../configure --prefix=${prefix}
+test -f Makefile || ../configure --prefix=${prefix} --without-tidy
 make ${make_j} install
-test -n "${documentation}" && make doxygen-doc
+test -n ${documentation} && make doxygen-doc
 cd $CWD
 
 # amis
@@ -188,7 +167,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix}
 make ${make_j} install
-test -n "${documentation}" && make doxygen-doc
+test -n ${documentation} && make doxygen-doc
 cd $CWD
 
 # daisyonline
@@ -198,7 +177,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix}
 make ${make_j} install
-test -n "${documentation}" && make doxygen-doc
+test -n ${documentation} && make doxygen-doc
 cd $CWD
 
 # naviengine
@@ -208,7 +187,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix}
 make ${make_j} install
-test -n "${documentation}" && make doxygen-doc
+test -n ${documentation} && make doxygen-doc
 cd $CWD
 
 # clientcode
@@ -218,7 +197,7 @@ test -d build || mkdir build
 cd build
 test -f Makefile || ../configure --prefix=${prefix} --with-samples
 make ${make_j} install
-test -n "${documentation}" && make doxygen-doc
+test -n ${documentation} && make doxygen-doc
 cd $CWD
 
 # build messages.db using narrator utils

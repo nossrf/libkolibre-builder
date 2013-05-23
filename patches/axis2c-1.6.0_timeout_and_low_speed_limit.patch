@@ -1,0 +1,18 @@
+Index: libkolibre-builder/build/axis2c-src-1.6.0/src/core/transport/http/sender/libcurl/axis2_libcurl.c
+===================================================================
+--- libkolibre-builder.orig/build/axis2c-src-1.6.0/src/core/transport/http/sender/libcurl/axis2_libcurl.c
++++ libkolibre-builder/build/axis2c-src-1.6.0/src/core/transport/http/sender/libcurl/axis2_libcurl.c
+@@ -493,6 +493,13 @@ axis2_libcurl_send(
+             curl_easy_setopt(handler, CURLOPT_POSTFIELDS, output_stream);
+         }
+ 
++        /* kim: Shorten the timeout on initial connections */
++        curl_easy_setopt (handler, CURLOPT_CONNECTTIMEOUT, 15);
++        curl_easy_setopt (handler, CURLOPT_TIMEOUT, 15 + 10);
++
++        /* jonas: Tell curl to timeout of no data is coming through */
++        curl_easy_setopt (handler, CURLOPT_LOW_SPEED_LIMIT, 1000);
++        curl_easy_setopt (handler, CURLOPT_LOW_SPEED_TIME, 15);
+ 
+         if (send_via_put)
+         {
