@@ -19,6 +19,16 @@ also functions as a developing framework that developers can use when adding new
 features or fixing bugs in the libraries.
 
 
+Documentation
+---------------------------------
+Kolibre client developer documentation is available at 
+https://github.com/kolibre/libkolibre-builder/wiki
+
+This library is documented using doxygen.
+
+Type ./configure && make doxygen-doc to generate documentation.
+
+
 Build instructions for Linux
 ---------------------------------
 
