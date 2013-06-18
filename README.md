@@ -24,37 +24,33 @@ Documentation
 Kolibre client developer documentation is available at 
 https://github.com/kolibre/libkolibre-builder/wiki
 
-This library is documented using doxygen.
-
-Type ./configure && make doxygen-doc to generate documentation.
-
 
 Build instructions for Linux
 ---------------------------------
 
-1. Install general build tools
+Install general build tools
 
-$ sudo apt-get install build-essential autotools-dev autoconf autoconf-archive
-libtool pkg-config
+    $ sudo apt-get install build-essential autotools-dev autoconf autoconf-archive libtool pkg-config
 
-2. Install libkolibre build dependencies
+Install libkolibre build dependencies
 
-$ sudo apt-get install liblog4cxx10-dev libvorbis-dev libsoundtouch1-dev espeak
-sox vorbis-tools libsqlite3-dev libboost-signals-dev libboost-regex-dev
-libgstreamer-plugins-base0.10-dev libcurl4-openssl-dev libtidy-dev libxml2-dev
-socat libasound2-dev
+    $ sudo apt-get install liblog4cxx10-dev libvorbis-dev libsoundtouch1-dev espeak \
+    sox vorbis-tools libsqlite3-dev libboost-signals-dev libboost-regex-dev \
+    libgstreamer-plugins-base0.10-dev libcurl4-openssl-dev libtidy-dev libxml2-dev \
+    socat libasound2-dev
 
-3. Install gstreamer runtime dependencies
+Install gstreamer runtime dependencies
 
-$ sudo apt-get install gstreamer0.10-plugins-good gstreamer0.10-plugins-bad gstreamer0.10-fluendo-mp3 gstreamer0.10-alsa
+    $ sudo apt-get install gstreamer0.10-plugins-good gstreamer0.10-plugins-bad \
+    gstreamer0.10-fluendo-mp3 gstreamer0.10-alsa
 
-4. Checkout the submodules
+Checkout the submodules
 
-$ git submodule init && git submodule update
+    $ git submodule init && git submodule update
 
-5. Run the build script
+Run the build script
 
-$ ./build_linux_sdk.sh
+    $ ./build_linux_sdk.sh
 
 
 Licensing
