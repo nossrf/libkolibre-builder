@@ -47,7 +47,7 @@ set -e
 #
 
 #libxml2_version=2.7.8
-portaudio_version="v19_20110326"
+#portaudio_version="v19_20110326"
 axis2c_version=1.6.0
 
 #
@@ -130,8 +130,11 @@ then
     patch -p0 < ${patchDir}/axis2c-1.6.0_curl_ssl.patch
     patch -p0 < ${patchDir}/axis2c-1.6.0_curl_useragent.patch
     patch -p0 < ${patchDir}/axis2c-1.6.0_xml_https.patch
-    #patch -p0 < ${patchDir}/axis2c-1.6.0_ssl_utils.patch # does not work on debian squeeze
+    patch -p0 < ${patchDir}/axis2c-1.6.0_ssl_utils.patch
+    patch -p0 < ${patchDir}/axis2c-1.6.0_no_neethi_test.patch
 
+    OLD_CFLAGS="${CFLAGS}"
+    export CFLAGS="${OLD_CFLAGS} -Wno-error=unused-but-set-variable -Wno-error=uninitialized -Wno-error=maybe-uninitialized"
     autoreconf -f -i
     ./configure \
         --enable-guththila=no \
@@ -141,6 +144,7 @@ then
         --prefix=${prefix}
     make ${make_j}
     make install
+    export CFLAGS="${OLD_CFLAGS}"
     echo ${axis2csrc} $(date) >> ${buildStamps}
     cd ..
 fi
