@@ -121,9 +121,7 @@ fi
 # build axis2c
 if [ -n "${axis2c_version}" ] && ! grep ${axis2csrc} ${buildStamps}
 then
-    # source code was not found on any mirrors at the time of writing, thus
-    # we have committed a copy of the source with this repository
-    #test -f ${downloadDir}/${axis2csrc} || download http://www.eu.apache.org/dist//ws/axis2/c/1_6_0/${axis2csrc}
+    test -f ${downloadDir}/${axis2csrc} || download http://archive.apache.org/dist/ws/axis2/c/1_6_0/${axis2csrc}
     rm -rf ${axis2c}
     tar xzvf ${downloadDir}/${axis2csrc}
     cd ${axis2c}
