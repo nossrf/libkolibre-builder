@@ -47,7 +47,7 @@ set -e
 #
 
 #libxml2_version=2.7.8
-portaudio_version="v19_20110326"
+#portaudio_version="v19_20110326"
 axis2c_version=1.6.0
 
 #
@@ -121,17 +121,18 @@ fi
 # build axis2c
 if [ -n "${axis2c_version}" ] && ! grep ${axis2csrc} ${buildStamps}
 then
-    # source code was not found on any mirrors at the time of writing, thus
-    # we have committed a copy of the source with this repository
-    #test -f ${downloadDir}/${axis2csrc} || download http://www.eu.apache.org/dist//ws/axis2/c/1_6_0/${axis2csrc}
+    test -f ${downloadDir}/${axis2csrc} || download http://archive.apache.org/dist/ws/axis2/c/1_6_0/${axis2csrc}
     rm -rf ${axis2c}
     tar xzvf ${downloadDir}/${axis2csrc}
     cd ${axis2c}
     patch -p0 < ${patchDir}/axis2c-1.6.0_curl_ssl.patch
     patch -p0 < ${patchDir}/axis2c-1.6.0_curl_useragent.patch
     patch -p0 < ${patchDir}/axis2c-1.6.0_xml_https.patch
-    #patch -p0 < ${patchDir}/axis2c-1.6.0_ssl_utils.patch # does not work on debian squeeze
+    patch -p0 < ${patchDir}/axis2c-1.6.0_ssl_utils.patch
+    patch -p0 < ${patchDir}/axis2c-1.6.0_no_neethi_test.patch
 
+    OLD_CFLAGS="${CFLAGS}"
+    export CFLAGS="${OLD_CFLAGS} -Wno-error=unused-but-set-variable -Wno-error=uninitialized -Wno-error=maybe-uninitialized"
     autoreconf -f -i
     ./configure \
         --enable-guththila=no \
@@ -141,6 +142,7 @@ then
         --prefix=${prefix}
     make ${make_j}
     make install
+    export CFLAGS="${OLD_CFLAGS}"
     echo ${axis2csrc} $(date) >> ${buildStamps}
     cd ..
 fi
