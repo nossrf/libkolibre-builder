@@ -37,7 +37,7 @@ Install libkolibre build dependencies
     $ sudo apt-get install liblog4cxx10-dev libvorbis-dev libsoundtouch1-dev espeak \
     sox vorbis-tools libsqlite3-dev libboost-signals-dev libboost-regex-dev \
     libgstreamer-plugins-base0.10-dev libcurl4-openssl-dev libtidy-dev libxml2-dev \
-    socat libasound2-dev
+    socat libasound2-dev portaudio19-dev
 
 Install gstreamer runtime dependencies
 
